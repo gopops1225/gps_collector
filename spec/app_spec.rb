@@ -10,7 +10,7 @@ end
 
 RSpec.describe 'The GPS Collector App' do
   include Rack::Test::Methods
-  
+
   before :each do
     GeoPoint.destroy_all
   end
