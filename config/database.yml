@@ -1,0 +1,14 @@
+development:
+  adapter: postgis
+  database: gps_collector
+  username: gps_collector
+  password: gps_collector
+  host: db
+  schema_search_path: public, postgis
+test:
+  adapter: postgis
+  database: gps_collector
+  username: gps_collector
+  password: gps_collector
+  host: test_db
+  schema_search_path: public, postgis

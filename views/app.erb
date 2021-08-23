@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <title>GPS Collector</title>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>GPS COLLECTOR</h1>
+      </div>
+    </div>
+    <div class="container">
+      <% flash.keys.each do |type| %>
+        <div data-alert class="flash <%= type %> alert-box radius">
+          <%= flash[type] %>
+        </div>
+      <% end %>
+    </div>
+  </head>
+  <body>
+  <div class="container">
+    <div class="row g-3">
+      <div class="col">
+        <form method="post" action="/create_point">
+          <textarea name="geo_point" class="form-control">{ "type": "Point","coordinates": [100.0, 0.0]}</textarea>
+          <button type="submit" class="btn btn-primary">Enter Point</button>
+        </form>
+        <div class="container">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title"><%= @points.count %> Saved Points</h5>
+              <ul class="list-group list-group-flush">
+                <% @points&.first(15)&.each do |point| %>
+                <li class="list-group-item"><%= point.coords.as_text %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <form method="get" action="/in_radius">
+          <textarea name="radius_point" class="form-control"><%= @radius_point&.as_text || '{ "type": "Point","coordinates": [100.0, 0.0]}'%></textarea>
+          <div class="row">
+            <div class="col-md-7">
+              <input type="number" class="form-control" name="meters" placeholder="Enter Radius(meters)">
+            </div>
+            <div class="col">
+              <button type="submit" class="btn btn-primary">Submit Point/Radius</button>
+            </div>
+          </div>
+        </form>
+        <div class="container">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title"><%= @points_in_radius&.count || 0 %> Point(s) in Radius</h5>
+              <ul class="list-group list-group-flush">
+                <% @points_in_radius&.first(15)&.each do |point| %>
+                <li class="list-group-item"><%= point.coords.as_text %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <form method="get" action="/within_polygon">
+          <textarea name="polygon" class="form-control"><%= @polygon&.as_text || '{"type": "Polygon", "coordinates": [ [[100.0, 0.0], [101.0, 0.0],
+          [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ] ]}' %></textarea>
+          <button type="submit" class="btn btn-primary">Enter Polygon</button>
+        </form>
+        <div class="container">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title"><%= @points_within&.count || 0 %> Point(s) in Polygon</h5>
+              <ul class="list-group list-group-flush">
+                <% @points_within&.first(15)&.each do |point| %>
+                <li class="list-group-item"><%= point.coords.as_text %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>
