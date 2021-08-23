@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 gem 'activerecord'
 gem 'activerecord-postgis-adapter'
-gem 'bootstrap', '~> 4.0.0'
+gem 'bootstrap'
 gem 'pg'
 gem 'pry'
 gem 'puma'

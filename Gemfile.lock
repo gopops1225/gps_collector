@@ -125,7 +125,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   activerecord-postgis-adapter
-  bootstrap (~> 4.0.0)
+  bootstrap
   pg
   pry
   puma
